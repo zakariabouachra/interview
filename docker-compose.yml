@@ -1,18 +1,19 @@
 version: '3'
 services:
   backend:
-    build: ./backend
-    command: python app/manage.py runserver 0.0.0.0:8000
+    build: ./app
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - ./backend:/app
-      - ./backend/db.sqlite3:/app/db.sqlite3  # Permet de persister la base de données
+      - ./app:/app
+      - ./app/db.sqlite3:/app/db.sqlite3  # Persister la base de données SQLite
     ports:
       - "8000:8000"
 
   frontend:
-    build: ./frontend
+    build: ./app
     command: npm start
+    working_dir: /app
     volumes:
-      - ./frontend:/app
+      - ./app:/app
     ports:
       - "3000:3000"
